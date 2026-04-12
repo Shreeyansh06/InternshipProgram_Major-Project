@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Prediction - Revenue Impact Dashboard</title>
+
+    <!-- Link CSS files -->
+    <link rel="stylesheet" href="ml-results.css">
+    <link rel="stylesheet" href="ml-tables.css">
+    <link rel="stylesheet" href="ml-charts.css">
+
+    <style>
+        /* Additional churn-specific styles */
+        .gradient-card {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .gradient-card.revenue-loss {
+            --gradient-start: #dc2626;
+            --gradient-end: #b91c1c;
+        }
+
+        .gradient-card.high-value-risk {
+            --gradient-start: #f59e0b;
+            --gradient-end: #d97706;
+        }
+
+        .gradient-card.total-churn {
+            --gradient-start: #2563eb;
+            --gradient-end: #1d4ed8;
+        }
+
+        .gradient-card.avg-revenue {
+            --gradient-start: #16a34a;
+            --gradient-end: #15803d;
+        }
+
+        .icon-wrapper {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .churn-bar-animated {
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="ml-header">
+        <div class="ml-container">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <div>
+                    <h1>Customer Churn Prediction</h1>
+                    <p style="font-size: 14px; color: #717182; margin-top: 4px;">AI-powered revenue retention analytics</p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background-color: #dcfce7; border: 1px solid rgba(22, 163, 74, 0.2); border-radius: 8px;">
+                    <svg style="width: 20px; height: 20px; color: #16a34a;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span style="font-size: 15px; color: #16a34a;">Analysis Complete</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="ml-container" style="padding-top: 32px; padding-bottom: 32px;">
+
+        <!-- Revenue Impact Dashboard -->
+        <section class="ml-section">
+            <h2 class="ml-section-title ml-mb-24">Revenue Impact Analysis</h2>
+
+            <div class="ml-metrics-grid">
+                <!-- Estimated Revenue Loss -->
+                <div class="ml-metric-card gradient-card revenue-loss">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div class="icon-wrapper">
+                            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div style="font-size: 13px; opacity: 0.9;">Estimated Revenue Loss</div>
+                    </div>
+                    <div class="ml-metric-value">$214.8K</div>
+                    <div style="font-size: 13px; opacity: 0.75;">Annual projection</div>
+                </div>
+
+                <!-- High-Value Customers at Risk -->
+                <div class="ml-metric-card gradient-card high-value-risk">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div class="icon-wrapper">
+                            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                        </div>
+                        <div style="font-size: 13px; opacity: 0.9;">High-Value at Risk</div>
+                    </div>
+                    <div class="ml-metric-value">5</div>
+                    <div style="font-size: 13px; opacity: 0.75;">Customers</div>
+                </div>
+
+                <!-- Total Customers Likely to Churn -->
+                <div class="ml-metric-card gradient-card total-churn">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div class="icon-wrapper">
+                            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
+                            </svg>
+                        </div>
+                        <div style="font-size: 13px; opacity: 0.9;">Total Likely to Churn</div>
+                    </div>
+                    <div class="ml-metric-value">909</div>
+                    <div style="font-size: 13px; opacity: 0.75;">Next 30 days</div>
+                </div>
+
+                <!-- Avg Revenue Per Customer -->
+                <div class="ml-metric-card gradient-card avg-revenue">
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                        <div class="icon-wrapper">
+                            <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <div style="font-size: 13px; opacity: 0.9;">Avg Revenue Per Customer</div>
+                    </div>
+                    <div class="ml-metric-value">$3,520</div>
+                    <div style="font-size: 13px; opacity: 0.75;">Monthly</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- High-Value Customers at Risk Table -->
+        <section class="ml-section">
+            <div class="ml-table-wrapper">
+                <div class="ml-card-header">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <h2 class="ml-section-title">High-Value Customers at Risk</h2>
+                            <p class="ml-section-subtitle">Top customers likely to churn — immediate action required</p>
+                        </div>
+                        <button class="ml-btn ml-btn-primary">
+                            <svg class="ml-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            <span>Export List</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="ml-table-container">
+                    <table class="ml-table">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Company Name</th>
+                                <th class="text-right">Monthly Revenue</th>
+                                <th class="text-right">Churn Probability</th>
+                                <th>Risk Factors</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="ml-customer-id">C10234</span></td>
+                                <td>Enterprise Corp</td>
+                                <td class="text-right" style="font-weight: 500;">$4,850</td>
+                                <td class="text-right">
+                                    <div class="ml-churn-probability">
+                                        <div class="ml-churn-bar-container">
+                                            <div class="ml-churn-bar churn-bar-animated" style="width: 89%;"></div>
+                                        </div>
+                                        <span class="ml-churn-percentage high">89%</span>
+                                    </div>
+                                </td>
+                                <td><span class="ml-risk-factors">Low engagement, Late payments</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="ml-customer-id">C10189</span></td>
+                                <td>Global Solutions Ltd</td>
+                                <td class="text-right" style="font-weight: 500;">$3,920</td>
+                                <td class="text-right">
+                                    <div class="ml-churn-probability">
+                                        <div class="ml-churn-bar-container">
+                                            <div class="ml-churn-bar churn-bar-animated" style="width: 84%;"></div>
+                                        </div>
+                                        <span class="ml-churn-percentage high">84%</span>
+                                    </div>
+                                </td>
+                                <td><span class="ml-risk-factors">Support tickets increasing</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="ml-customer-id">C10456</span></td>
+                                <td>Tech Innovations Inc</td>
+                                <td class="text-right" style="font-weight: 500;">$3,200</td>
+                                <td class="text-right">
+                                    <div class="ml-churn-probability">
+                                        <div class="ml-churn-bar-container">
+                                            <div class="ml-churn-bar churn-bar-animated" style="width: 78%;"></div>
+                                        </div>
+                                        <span class="ml-churn-percentage medium">78%</span>
+                                    </div>
+                                </td>
+                                <td><span class="ml-risk-factors">Exploring competitors</span></td>
+                            </tr>
+                            <!-- Python template example:
+                            {% for customer in high_value_customers %}
+                            <tr>
+                                <td><span class="ml-customer-id">{{ customer.id }}</span></td>
+                                <td>{{ customer.name }}</td>
+                                <td class="text-right" style="font-weight: 500;">${{ customer.monthly_revenue|number_format }}</td>
+                                <td class="text-right">
+                                    <div class="ml-churn-probability">
+                                        <div class="ml-churn-bar-container">
+                                            <div class="ml-churn-bar churn-bar-animated" style="width: {{ customer.churn_prob * 100 }}%;"></div>
+                                        </div>
+                                        <span class="ml-churn-percentage {{ 'high' if customer.churn_prob > 0.8 else 'medium' }}">
+                                            {{ (customer.churn_prob * 100)|round }}%
+                                        </span>
+                                    </div>
+                                </td>
+                                <td><span class="ml-risk-factors">{{ customer.risk_factors }}</span></td>
+                            </tr>
+                            {% endfor %}
+                            -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Customers Churn -->
+        <section class="ml-section">
+            <div class="ml-chart-container">
+                <div class="ml-chart-header">
+                    <h3 class="ml-chart-title">Why Customers Churn</h3>
+                    <p class="ml-chart-subtitle">Top reasons driving customer attrition</p>
+                </div>
+
+                <div class="ml-bar-chart">
+                    <div class="ml-bar-item">
+                        <div class="ml-bar-label">Low Engagement</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: 96%; background-color: #dc2626;">
+                                <span class="ml-bar-value">32%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ml-bar-item">
+                        <div class="ml-bar-label">High Support Tickets</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: 84%; background-color: #dc2626;">
+                                <span class="ml-bar-value">28%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ml-bar-item">
+                        <div class="ml-bar-label">Price Sensitivity</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: 66%; background-color: #dc2626;">
+                                <span class="ml-bar-value">22%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ml-bar-item">
+                        <div class="ml-bar-label">Contract Length</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: 54%; background-color: #dc2626;">
+                                <span class="ml-bar-value">18%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Python template:
+                    {% for reason in churn_reasons %}
+                    <div class="ml-bar-item">
+                        <div class="ml-bar-label">{{ reason.name }}</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: {{ reason.importance * 100 }}%; background-color: #dc2626;">
+                                <span class="ml-bar-value">{{ (reason.importance * 100)|round }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Individual Customer Analysis (SHAP) -->
+        <section class="ml-section">
+            <div class="ml-card">
+                <h3 class="ml-section-title ml-mb-8">Individual Customer Analysis</h3>
+                <p class="ml-section-subtitle ml-mb-24">SHAP values showing why specific customers will churn</p>
+
+                <!-- Customer Header -->
+                <div style="background-color: rgba(236, 236, 240, 0.3); border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="font-size: 14px; font-weight: 500;">Customer: Enterprise Corp (C10234)</span>
+                        <span style="padding: 4px 12px; background-color: #dc2626; color: white; border-radius: 16px; font-size: 13px;">
+                            89% Churn Risk
+                        </span>
+                    </div>
+                    <div style="font-size: 13px; color: #717182;">Monthly Revenue: $4,850 • Contract: Enterprise Plan</div>
+                </div>
+
+                <!-- SHAP Values -->
+                <div class="ml-shap-container">
+                    <div class="ml-shap-item">
+                        <div class="ml-shap-header">
+                            <span class="ml-shap-feature">Low Product Engagement</span>
+                            <span class="ml-shap-value" style="color: #dc2626;">+0.48</span>
+                        </div>
+                        <div class="ml-shap-bar-container">
+                            <div class="ml-shap-bar negative" style="width: 96%;"></div>
+                        </div>
+                        <div class="ml-shap-description">Last login: 18 days ago • Feature usage dropped 67%</div>
+                    </div>
+
+                    <div class="ml-shap-item">
+                        <div class="ml-shap-header">
+                            <span class="ml-shap-feature">Payment Delays</span>
+                            <span class="ml-shap-value" style="color: #dc2626;">+0.34</span>
+                        </div>
+                        <div class="ml-shap-bar-container">
+                            <div class="ml-shap-bar negative" style="width: 68%;"></div>
+                        </div>
+                        <div class="ml-shap-description">2 late payments in last 3 months</div>
+                    </div>
+
+                    <div class="ml-shap-item">
+                        <div class="ml-shap-header">
+                            <span class="ml-shap-feature">Support Ticket Volume</span>
+                            <span class="ml-shap-value" style="color: #dc2626;">+0.29</span>
+                        </div>
+                        <div class="ml-shap-bar-container">
+                            <div class="ml-shap-bar negative" style="width: 58%;"></div>
+                        </div>
+                        <div class="ml-shap-description">12 support tickets in last 30 days (3x average)</div>
+                    </div>
+
+                    <div class="ml-shap-item">
+                        <div class="ml-shap-header">
+                            <span class="ml-shap-feature">Contract Expiration</span>
+                            <span class="ml-shap-value" style="color: #f59e0b;">+0.22</span>
+                        </div>
+                        <div class="ml-shap-bar-container">
+                            <div class="ml-shap-bar" style="width: 44%; background-color: #f59e0b;"></div>
+                        </div>
+                        <div class="ml-shap-description">Contract expires in 45 days • No renewal discussions initiated</div>
+                    </div>
+
+                    <!-- Python template:
+                    {% for shap in customer_shap_values %}
+                    <div class="ml-shap-item">
+                        <div class="ml-shap-header">
+                            <span class="ml-shap-feature">{{ shap.feature }}</span>
+                            <span class="ml-shap-value" style="color: {{ '#dc2626' if shap.value > 0.3 else '#f59e0b' }};">
+                                {{ '+' if shap.value > 0 else '' }}{{ shap.value|round(2) }}
+                            </span>
+                        </div>
+                        <div class="ml-shap-bar-container">
+                            <div class="ml-shap-bar {{ 'negative' if shap.value > 0 else 'positive' }}"
+                                 style="width: {{ (shap.value|abs * 100)|round }}%;"></div>
+                        </div>
+                        <div class="ml-shap-description">{{ shap.description }}</div>
+                    </div>
+                    {% endfor %}
+                    -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Python Flask Example:
+
+    from flask import Flask, render_template
+
+    @app.route('/churn-analysis')
+    def churn_analysis():
+        context = {
+            'revenue_loss': 214.8,  # in thousands
+            'high_value_at_risk': 5,
+            'total_likely_churn': 909,
+            'avg_revenue_per_customer': 3520,
+            'high_value_customers': [
+                {
+                    'id': 'C10234',
+                    'name': 'Enterprise Corp',
+                    'monthly_revenue': 4850,
+                    'churn_prob': 0.89,
+                    'risk_factors': 'Low engagement, Late payments'
+                },
+                # ... more customers
+            ],
+            'churn_reasons': [
+                {'name': 'Low Engagement', 'importance': 0.32},
+                {'name': 'High Support Tickets', 'importance': 0.28},
+                # ... more reasons
+            ],
+            'customer_shap_values': [
+                {
+                    'feature': 'Low Product Engagement',
+                    'value': 0.48,
+                    'description': 'Last login: 18 days ago • Feature usage dropped 67%'
+                },
+                # ... more SHAP values
+            ]
+        }
+        return render_template('churn-prediction-template.html', **context)
+    -->
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Analysis Results - Python Integration Example</title>
+
+    <!-- Link all three CSS files -->
+    <link rel="stylesheet" href="ml-results.css">
+    <link rel="stylesheet" href="ml-tables.css">
+    <link rel="stylesheet" href="ml-charts.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="ml-header">
+        <div class="ml-container">
+            <h1>ML Analysis Platform</h1>
+        </div>
+    </header>
+
+    <div class="ml-container">
+        <!-- Upload Section -->
+        <section class="ml-section">
+            <div class="ml-card">
+                <div style="display: flex; align-items: start; justify-content: space-between; margin-bottom: 24px;">
+                    <div>
+                        <h2 class="ml-section-title">Data Upload</h2>
+                        <p class="ml-section-subtitle">Upload customer data files for analysis (CSV, Excel)</p>
+                    </div>
+                    <div class="ml-status-badge">
+                        <svg class="ml-status-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Analysis Complete</span>
+                    </div>
+                </div>
+
+                <div class="ml-upload-zone">
+                    <svg class="ml-upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    <p class="ml-upload-text">Drop files here or click to browse</p>
+                    <p class="ml-upload-subtext">Supports CSV, XLSX (Max 500MB)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Performance Metrics -->
+        <section class="ml-section">
+            <div class="ml-section-header">
+                <h2 class="ml-section-title">Model Performance</h2>
+                <button class="ml-btn ml-btn-primary">
+                    <svg class="ml-btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    <span>Export Results</span>
+                </button>
+            </div>
+
+            <div class="ml-metrics-grid">
+                <div class="ml-metric-card">
+                    <div class="ml-metric-label">Accuracy</div>
+                    <div class="ml-metric-value">94.2%</div>
+                    <div class="ml-metric-change">+2.3% vs baseline</div>
+                </div>
+
+                <div class="ml-metric-card">
+                    <div class="ml-metric-label">Precision</div>
+                    <div class="ml-metric-value">91.8%</div>
+                    <div class="ml-metric-change">+1.8% vs baseline</div>
+                </div>
+
+                <div class="ml-metric-card">
+                    <div class="ml-metric-label">Recall</div>
+                    <div class="ml-metric-value">89.5%</div>
+                    <div class="ml-metric-change">+3.1% vs baseline</div>
+                </div>
+
+                <div class="ml-metric-card">
+                    <div class="ml-metric-label">F1 Score</div>
+                    <div class="ml-metric-value">90.6%</div>
+                    <div class="ml-metric-change">+2.5% vs baseline</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Comparison Table -->
+        <section class="ml-section">
+            <div class="ml-table-wrapper">
+                <div class="ml-card-header">
+                    <h2 class="ml-section-title">Model Comparison</h2>
+                    <p class="ml-section-subtitle">Performance across different algorithms</p>
+                </div>
+
+                <div class="ml-table-container">
+                    <table class="ml-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th class="text-right">Accuracy</th>
+                                <th class="text-right">Precision</th>
+                                <th class="text-right">Recall</th>
+                                <th class="text-right">F1 Score</th>
+                                <th class="text-right">Training Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="ml-table-cell-with-icon">
+                                        <svg class="ml-table-icon success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        <span>Random Forest</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">94.2%</td>
+                                <td class="text-right">91.8%</td>
+                                <td class="text-right">89.5%</td>
+                                <td class="text-right">90.6%</td>
+                                <td class="text-right">2.3s</td>
+                            </tr>
+                            <tr>
+                                <td>XGBoost</td>
+                                <td class="text-right">92.8%</td>
+                                <td class="text-right">90.2%</td>
+                                <td class="text-right">88.1%</td>
+                                <td class="text-right">89.1%</td>
+                                <td class="text-right">3.7s</td>
+                            </tr>
+                            <tr>
+                                <td>Logistic Regression</td>
+                                <td class="text-right">88.5%</td>
+                                <td class="text-right">86.3%</td>
+                                <td class="text-right">84.7%</td>
+                                <td class="text-right">85.5%</td>
+                                <td class="text-right">0.8s</td>
+                            </tr>
+                            <!-- Python: Use Jinja2 or similar templating to populate rows -->
+                            <!-- {% for model in models %} -->
+                            <!-- <tr>
+                                <td>{{ model.name }}</td>
+                                <td class="text-right">{{ model.accuracy }}%</td>
+                                ...
+                            </tr> -->
+                            <!-- {% endfor %} -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visualizations Grid -->
+        <div class="ml-viz-grid ml-section">
+            <!-- Confusion Matrix -->
+            <div class="ml-chart-container">
+                <div class="ml-chart-header">
+                    <h3 class="ml-chart-title">Confusion Matrix</h3>
+                    <p class="ml-chart-subtitle">Random Forest - Validation Set</p>
+                </div>
+
+                <div class="ml-confusion-matrix">
+                    <div class="ml-confusion-cell true-negative">
+                        <div class="ml-confusion-label">True Negative</div>
+                        <div class="ml-confusion-value">4,521</div>
+                    </div>
+                    <div class="ml-confusion-cell false-positive">
+                        <div class="ml-confusion-label">False Positive</div>
+                        <div class="ml-confusion-value">234</div>
+                    </div>
+                    <div class="ml-confusion-cell false-negative">
+                        <div class="ml-confusion-label">False Negative</div>
+                        <div class="ml-confusion-value">187</div>
+                    </div>
+                    <div class="ml-confusion-cell true-positive">
+                        <div class="ml-confusion-label">True Positive</div>
+                        <div class="ml-confusion-value">3,058</div>
+                    </div>
+                </div>
+                <div class="ml-confusion-total">Total Samples: 8,000</div>
+            </div>
+
+            <!-- ROC Curve Placeholder -->
+            <div class="ml-chart-container">
+                <div class="ml-chart-header">
+                    <h3 class="ml-chart-title">ROC Curve</h3>
+                    <p class="ml-chart-subtitle">AUC = 0.967</p>
+                </div>
+                <div class="ml-chart-wrapper">
+                    <!-- Insert matplotlib/plotly generated image or canvas here -->
+                    <!-- Example with Python: -->
+                    <!-- <img src="{{ url_for('static', filename='roc_curve.png') }}" alt="ROC Curve" style="width: 100%; height: auto;"> -->
+                    <div class="ml-chart-empty">
+                        <p class="ml-chart-empty-text">ROC Curve visualization area</p>
+                        <p class="ml-chart-empty-text" style="font-size: 12px; margin-top: 8px;">
+                            Insert your matplotlib/plotly chart here
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Importance -->
+        <section class="ml-section">
+            <div class="ml-chart-container">
+                <div class="ml-chart-header">
+                    <h3 class="ml-chart-title">Feature Importance</h3>
+                    <p class="ml-chart-subtitle">Top factors influencing model predictions</p>
+                </div>
+
+                <div class="ml-bar-chart">
+                    <div class="ml-bar-item">
+                        <div class="ml-bar-label">Age</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: 84%;">
+                                <span class="ml-bar-value">0.28</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-bar-item">
+                        <div class="ml-bar-label">Income</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: 72%;">
+                                <span class="ml-bar-value">0.24</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-bar-item">
+                        <div class="ml-bar-label">Credit Score</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: 57%;">
+                                <span class="ml-bar-value">0.19</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-bar-item">
+                        <div class="ml-bar-label">Purchase History</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: 45%;">
+                                <span class="ml-bar-value">0.15</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Python: Generate dynamically -->
+                    <!-- {% for feature in feature_importance %} -->
+                    <!-- <div class="ml-bar-item">
+                        <div class="ml-bar-label">{{ feature.name }}</div>
+                        <div class="ml-bar-track">
+                            <div class="ml-bar-fill" style="width: {{ feature.importance * 100 }}%;">
+                                <span class="ml-bar-value">{{ feature.importance }}</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- {% endfor %} -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SHAP Analysis -->
+        <section class="ml-section">
+            <div class="ml-card">
+                <h3 class="ml-section-title ml-mb-8">SHAP Analysis</h3>
+                <p class="ml-section-subtitle ml-mb-24">Model interpretability and feature impact on predictions</p>
+
+                <div class="ml-shap-container">
+                    <div class="ml-shap-item">
+                        <div class="ml-shap-header">
+                            <span class="ml-shap-feature">Age</span>
+                            <span class="ml-shap-value">+0.42</span>
+                        </div>
+                        <div class="ml-shap-bar-container">
+                            <div class="ml-shap-bar positive" style="width: 84%;"></div>
+                        </div>
+                        <div class="ml-shap-description">Strong positive contribution to prediction</div>
+                    </div>
+
+                    <div class="ml-shap-item">
+                        <div class="ml-shap-header">
+                            <span class="ml-shap-feature">Income</span>
+                            <span class="ml-shap-value">+0.35</span>
+                        </div>
+                        <div class="ml-shap-bar-container">
+                            <div class="ml-shap-bar positive" style="width: 70%;"></div>
+                        </div>
+                        <div class="ml-shap-description">Moderate positive contribution to prediction</div>
+                    </div>
+
+                    <div class="ml-shap-item">
+                        <div class="ml-shap-header">
+                            <span class="ml-shap-feature">Credit Score</span>
+                            <span class="ml-shap-value">-0.18</span>
+                        </div>
+                        <div class="ml-shap-bar-container">
+                            <div class="ml-shap-bar negative" style="width: 36%;"></div>
+                        </div>
+                        <div class="ml-shap-description">Negative contribution to prediction</div>
+                    </div>
+
+                    <!-- Python: Generate dynamically -->
+                    <!-- {% for shap_value in shap_values %} -->
+                    <!-- <div class="ml-shap-item">
+                        <div class="ml-shap-header">
+                            <span class="ml-shap-feature">{{ shap_value.feature }}</span>
+                            <span class="ml-shap-value">{{ shap_value.value }}</span>
+                        </div>
+                        <div class="ml-shap-bar-container">
+                            <div class="ml-shap-bar {{ 'positive' if shap_value.value > 0 else 'negative' }}"
+                                 style="width: {{ abs(shap_value.value) * 100 }}%;"></div>
+                        </div>
+                        <div class="ml-shap-description">{{ shap_value.description }}</div>
+                    </div> -->
+                    <!-- {% endfor %} -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Python Integration Notes:
+
+    Flask Example:
+    --------------
+    from flask import Flask, render_template
+
+    @app.route('/results')
+    def show_results():
+        return render_template('example-template.html',
+            models=model_data,
+            metrics=performance_metrics,
+            feature_importance=feature_data,
+            shap_values=shap_data
+        )
+
+    Django Example:
+    --------------
+    from django.shortcuts import render
+
+    def results_view(request):
+        context = {
+            'models': model_data,
+            'metrics': performance_metrics,
+            'feature_importance': feature_data,
+            'shap_values': shap_data
+        }
+        return render(request, 'example-template.html', context)
+
+    For charts (ROC, confusion matrix images):
+    ------------------------------------------
+    1. Save matplotlib/plotly figures as PNG/SVG
+    2. Reference them using: <img src="{{ url_for('static', filename='chart.png') }}">
+    3. Or embed them as base64 data URIs
+    -->
+</body>
+</html>

@@ -1,0 +1,370 @@
+/* =====================================================
+   ML Results Dashboard - Tables Stylesheet
+   Standalone CSS for Model Comparison Tables
+   ===================================================== */
+
+/* ===== Table Wrapper ===== */
+.ml-table-wrapper {
+  background-color: var(--surface, #ffffff);
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  border-radius: var(--radius, 8px);
+  overflow: hidden;
+}
+
+.ml-table-container {
+  overflow-x: auto;
+}
+
+/* ===== Table Base Styles ===== */
+.ml-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+/* ===== Table Header ===== */
+.ml-table thead {
+  background-color: rgba(236, 236, 240, 0.3);
+  border-bottom: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+}
+
+.ml-table thead tr {
+  border-bottom: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+}
+
+.ml-table th {
+  padding: 16px 24px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary, #717182);
+  text-align: left;
+}
+
+.ml-table th.text-right {
+  text-align: right;
+}
+
+.ml-table th.text-center {
+  text-align: center;
+}
+
+/* ===== Table Body ===== */
+.ml-table tbody tr {
+  border-bottom: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  transition: background-color 0.15s ease;
+}
+
+.ml-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.ml-table tbody tr:hover {
+  background-color: rgba(236, 236, 240, 0.2);
+}
+
+.ml-table td {
+  padding: 16px 24px;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.ml-table td.text-right {
+  text-align: right;
+}
+
+.ml-table td.text-center {
+  text-align: center;
+}
+
+/* ===== Table Cell with Icon ===== */
+.ml-table-cell-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ml-table-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.ml-table-icon.success {
+  color: var(--success, #16a34a);
+}
+
+.ml-table-icon.error {
+  color: var(--error, #dc2626);
+}
+
+.ml-table-icon.warning {
+  color: #f59e0b;
+}
+
+/* ===== Table Status Badges ===== */
+.ml-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ml-badge-success {
+  background-color: var(--success-light, #dcfce7);
+  color: var(--success, #16a34a);
+}
+
+.ml-badge-warning {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.ml-badge-error {
+  background-color: var(--error-light, #fee2e2);
+  color: var(--error, #dc2626);
+}
+
+.ml-badge-neutral {
+  background-color: var(--muted, #ececf0);
+  color: var(--text-secondary, #717182);
+}
+
+/* ===== Table Metrics Highlight ===== */
+.ml-table-metric {
+  font-weight: 500;
+}
+
+.ml-table-metric.best {
+  color: var(--success, #16a34a);
+}
+
+.ml-table-metric.worst {
+  color: var(--error, #dc2626);
+}
+
+/* ===== Churn Probability Bar ===== */
+.ml-churn-probability {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ml-churn-bar-container {
+  flex: 1;
+  max-width: 100px;
+  height: 8px;
+  background-color: var(--muted, #ececf0);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ml-churn-bar {
+  height: 100%;
+  background-color: var(--error, #dc2626);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.ml-churn-percentage {
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 40px;
+  text-align: right;
+}
+
+.ml-churn-percentage.high {
+  color: var(--error, #dc2626);
+}
+
+.ml-churn-percentage.medium {
+  color: #f59e0b;
+}
+
+.ml-churn-percentage.low {
+  color: var(--success, #16a34a);
+}
+
+/* ===== Customer ID Mono Font ===== */
+.ml-customer-id {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  color: var(--text-primary, #1a1a1a);
+}
+
+/* ===== Risk Factors Cell ===== */
+.ml-risk-factors {
+  font-size: 13px;
+  color: var(--text-secondary, #717182);
+  max-width: 300px;
+}
+
+/* ===== Table Sorting (Optional) ===== */
+.ml-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 32px;
+}
+
+.ml-table th.sortable:hover {
+  background-color: rgba(236, 236, 240, 0.5);
+}
+
+.ml-table th.sortable::after {
+  content: '↕';
+  position: absolute;
+  right: 12px;
+  opacity: 0.3;
+  font-size: 12px;
+}
+
+.ml-table th.sortable.asc::after {
+  content: '↑';
+  opacity: 1;
+}
+
+.ml-table th.sortable.desc::after {
+  content: '↓';
+  opacity: 1;
+}
+
+/* ===== Responsive Table ===== */
+@media (max-width: 768px) {
+  .ml-table {
+    font-size: 14px;
+  }
+
+  .ml-table th,
+  .ml-table td {
+    padding: 12px 16px;
+  }
+
+  .ml-table th {
+    font-size: 12px;
+  }
+
+  /* Stack table on very small screens */
+  @media (max-width: 480px) {
+    .ml-table thead {
+      display: none;
+    }
+
+    .ml-table,
+    .ml-table tbody,
+    .ml-table tr,
+    .ml-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .ml-table tr {
+      margin-bottom: 16px;
+      border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+      border-radius: var(--radius, 8px);
+      padding: 12px;
+    }
+
+    .ml-table td {
+      padding: 8px 0;
+      text-align: left !important;
+      position: relative;
+      padding-left: 50%;
+    }
+
+    .ml-table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 45%;
+      padding-right: 10px;
+      font-weight: 500;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: var(--text-secondary, #717182);
+    }
+  }
+}
+
+/* ===== Table Loading State ===== */
+.ml-table-loading {
+  position: relative;
+  min-height: 200px;
+}
+
+.ml-table-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Empty State ===== */
+.ml-table-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-secondary, #717182);
+}
+
+.ml-table-empty-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  opacity: 0.3;
+}
+
+.ml-table-empty-text {
+  font-size: 15px;
+}
+
+/* ===== Table Pagination ===== */
+.ml-table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+}
+
+.ml-pagination-info {
+  font-size: 14px;
+  color: var(--text-secondary, #717182);
+}
+
+.ml-pagination-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.ml-pagination-btn {
+  padding: 8px 12px;
+  border: 1px solid var(--border, rgba(0, 0, 0, 0.1));
+  background-color: var(--surface, #ffffff);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.15s ease;
+}
+
+.ml-pagination-btn:hover:not(:disabled) {
+  background-color: rgba(236, 236, 240, 0.3);
+}
+
+.ml-pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ml-pagination-btn.active {
+  background-color: var(--primary-color, #030213);
+  color: var(--primary-foreground, #ffffff);
+  border-color: var(--primary-color, #030213);
+}
