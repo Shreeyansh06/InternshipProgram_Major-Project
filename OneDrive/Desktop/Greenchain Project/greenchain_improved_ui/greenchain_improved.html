@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenChain - Decentralized Carbon Credit Marketplace</title>
+    <link rel="stylesheet" href="greenchain_improved.css">
+    <!-- Web3.js for Ethereum/Polygon -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
+    <!-- Ethers.js -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <!-- Particles.js for background effect -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="logo-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40">
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#81C784;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="20" cy="20" r="18" fill="url(#logoGrad)" opacity="0.2"/>
+                        <path d="M20 8 L14 14 L20 20 L26 14 Z" fill="url(#logoGrad)"/>
+                        <path d="M20 20 L14 26 L20 32 L26 26 Z" fill="url(#logoGrad)" opacity="0.7"/>
+                    </svg>
+                </div>
+                <span class="brand-name">GreenChain</span>
+                <span class="beta-badge">
+                    <span class="badge-dot"></span>
+                    Live
+                </span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#earn" class="nav-link">Earn</a>
+                <a href="#marketplace" class="nav-link">Marketplace</a>
+                <a href="#portfolio" class="nav-link">Portfolio</a>
+            </div>
+
+            <div class="nav-actions">
+                <button class="btn-connect" id="connectWalletBtn">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M3 3a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V3z"/>
+                    </svg>
+                    <span id="connectBtnText">Connect Wallet</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-v2" id="home">
+        <div class="hero-bg">
+            <div class="mesh-gradient"></div>
+        </div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="badge-dot-pulse"></span>
+                    Live on Polygon Mumbai
+                </div>
+                
+                <h1 class="hero-title">
+                    Turn Your
+                    <span class="gradient-text-v2">Sustainable Actions</span>
+                    Into Digital Assets
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Earn blockchain-verified carbon credits in 30 seconds. 
+                    Trade them on our P2P marketplace. Make climate action profitable.
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-pill">
+                        <span class="stat-value">10,234</span>
+                        <span class="stat-label">Active Users</span>
+                    </div>
+                    <div class="stat-pill">
+                        <span class="stat-value">142 tons</span>
+                        <span class="stat-label">CO₂ Offset</span>
+                    </div>
+                    <div class="stat-pill">
+                        <span class="stat-value">₹4.2L</span>
+                        <span class="stat-label">Traded</span>
+                    </div>
+                </div>
+                
+                <div class="hero-cta">
+                    <button class="btn-primary-v2" onclick="scrollToSection('earn')">
+                        <span>Start Earning</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 3l7 7-7 7-1.41-1.41L13.17 11H3V9h10.17L8.59 4.41z"/>
+                        </svg>
+                    </button>
+                    <button class="btn-glass" onclick="scrollToSection('marketplace')">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/>
+                        </svg>
+                        <span>Explore Market</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="phone-mockup">
+                    <div class="mockup-glow"></div>
+                    <div class="phone-frame">
+                        <div class="phone-screen">
+                            <!-- Mini wallet card preview -->
+                            <div class="preview-card">
+                                <div class="preview-balance">142.5 CARB</div>
+                                <div class="preview-fiat">≈ ₹71.25</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wallet Section -->
+    <section class="wallet-section">
+        <div class="container">
+            <div class="wallet-card-v2">
+                <div class="card-shine"></div>
+                
+                <div class="wallet-header">
+                    <span class="wallet-label">Your Wallet</span>
+                    <button class="refresh-btn" onclick="refreshBalance()">
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" class="refresh-icon">
+                            <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="balance-display">
+                    <span class="balance-value" id="walletBalance">0</span>
+                    <span class="balance-currency">CARB</span>
+                </div>
+                
+                <div class="balance-fiat">
+                    ≈ ₹<span id="fiatValue">0.00</span>
+                    <span class="change positive">
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        +12.5%
+                    </span>
+                </div>
+                
+                <div class="wallet-actions">
+                    <button class="action-btn">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
+                        </svg>
+                        <span>Buy</span>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Send</span>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Swap</span>
+                    </button>
+                </div>
+                
+                <div class="price-ticker">
+                    <span class="ticker-label">1 CARB</span>
+                    <span class="ticker-price">₹0.50</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Earn Credits Section -->
+    <section class="earn-section" id="earn">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Earn Carbon Credits</h2>
+                <p class="section-subtitle">Get rewarded for sustainable actions verified by AI</p>
+            </div>
+
+            <div class="action-cards-grid">
+                <!-- Transport Card -->
+                <div class="action-card-v2" onclick="openEarnModal('transport')">
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrapper">
+                        <div class="icon-bg transport"></div>
+                        <span class="icon">🚌</span>
+                    </div>
+                    <h3>Public Transport</h3>
+                    <p>Log your eco-friendly commutes</p>
+                    <div class="reward-badge">
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Earn up to 5 CARB/day</span>
+                    </div>
+                    <button class="card-btn btn-press">
+                        <span>Log Action</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" class="arrow">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Tree Planting Card -->
+                <div class="action-card-v2" onclick="openEarnModal('tree')">
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrapper">
+                        <div class="icon-bg tree"></div>
+                        <span class="icon">🌳</span>
+                    </div>
+                    <h3>Plant Trees</h3>
+                    <p>Upload photo proof of planting</p>
+                    <div class="reward-badge">
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Earn 20 CARB/tree</span>
+                    </div>
+                    <button class="card-btn btn-press">
+                        <span>Upload Proof</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" class="arrow">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Solar Card -->
+                <div class="action-card-v2" onclick="openEarnModal('solar')">
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrapper">
+                        <div class="icon-bg solar"></div>
+                        <span class="icon">☀️</span>
+                    </div>
+                    <h3>Solar Energy</h3>
+                    <p>Connect solar panel data</p>
+                    <div class="reward-badge">
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Earn 50 CARB/month</span>
+                    </div>
+                    <button class="card-btn btn-press">
+                        <span>Connect IoT</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" class="arrow">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Eco Route Card -->
+                <div class="action-card-v2" onclick="openEarnModal('route')">
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrapper">
+                        <div class="icon-bg route"></div>
+                        <span class="icon">🚛</span>
+                    </div>
+                    <h3>Eco-Routes</h3>
+                    <p>Choose greener delivery routes</p>
+                    <div class="reward-badge">
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Earn 15 CARB/route</span>
+                    </div>
+                    <button class="card-btn btn-press">
+                        <span>Select Route</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" class="arrow">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketplace Section -->
+    <section class="marketplace-section" id="marketplace">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Carbon Credit Marketplace</h2>
+                <p class="section-subtitle">Buy and sell verified carbon credits on our P2P marketplace</p>
+            </div>
+
+            <div class="marketplace-filters">
+                <button class="filter-btn active" onclick="filterListings('all')">All</button>
+                <button class="filter-btn" onclick="filterListings('buy')">Buy</button>
+                <button class="filter-btn" onclick="filterListings('sell')">Sell</button>
+                <div class="marketplace-search">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                    </svg>
+                    <input type="text" placeholder="Search listings..." oninput="searchListings(this.value)">
+                </div>
+                <button class="btn-list-credit" onclick="openListModal()">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/>
+                    </svg>
+                    List Credits
+                </button>
+            </div>
+
+            <div class="listings-grid" id="listingsGrid">
+                <!-- Listing Cards -->
+                <div class="listing-card" data-type="sell">
+                    <div class="listing-header">
+                        <div class="seller-info">
+                            <div class="seller-avatar" style="background: linear-gradient(135deg,#4CAF50,#81C784)">R</div>
+                            <div>
+                                <div class="seller-name">Rahul M.</div>
+                                <div class="seller-location">Mumbai, MH</div>
+                            </div>
+                        </div>
+                        <span class="listing-type sell">Sell</span>
+                    </div>
+                    <div class="listing-amount">250 CARB</div>
+                    <div class="listing-details">
+                        <div class="detail-row">
+                            <span>Price per CARB</span>
+                            <span class="detail-value">₹0.55</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Total Value</span>
+                            <span class="detail-value">₹137.50</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>CO₂ Offset</span>
+                            <span class="detail-value">25 kg</span>
+                        </div>
+                    </div>
+                    <div class="listing-source">
+                        <span class="source-tag">🌳 Tree Planting</span>
+                        <span class="verified-badge">✓ AI Verified</span>
+                    </div>
+                    <button class="btn-trade sell-btn" onclick="openTradeModal('sell', 250, 0.55, 'Rahul M.')">Buy Now</button>
+                </div>
+
+                <div class="listing-card" data-type="sell">
+                    <div class="listing-header">
+                        <div class="seller-info">
+                            <div class="seller-avatar" style="background: linear-gradient(135deg,#2196F3,#42A5F5)">P</div>
+                            <div>
+                                <div class="seller-name">Priya S.</div>
+                                <div class="seller-location">Bangalore, KA</div>
+                            </div>
+                        </div>
+                        <span class="listing-type sell">Sell</span>
+                    </div>
+                    <div class="listing-amount">500 CARB</div>
+                    <div class="listing-details">
+                        <div class="detail-row">
+                            <span>Price per CARB</span>
+                            <span class="detail-value">₹0.52</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Total Value</span>
+                            <span class="detail-value">₹260.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>CO₂ Offset</span>
+                            <span class="detail-value">50 kg</span>
+                        </div>
+                    </div>
+                    <div class="listing-source">
+                        <span class="source-tag">☀️ Solar Energy</span>
+                        <span class="verified-badge">✓ AI Verified</span>
+                    </div>
+                    <button class="btn-trade sell-btn" onclick="openTradeModal('sell', 500, 0.52, 'Priya S.')">Buy Now</button>
+                </div>
+
+                <div class="listing-card" data-type="buy">
+                    <div class="listing-header">
+                        <div class="seller-info">
+                            <div class="seller-avatar" style="background: linear-gradient(135deg,#FF9800,#FFB74D)">A</div>
+                            <div>
+                                <div class="seller-name">Arjun K.</div>
+                                <div class="seller-location">Delhi, DL</div>
+                            </div>
+                        </div>
+                        <span class="listing-type buy">Buy</span>
+                    </div>
+                    <div class="listing-amount">150 CARB</div>
+                    <div class="listing-details">
+                        <div class="detail-row">
+                            <span>Offering per CARB</span>
+                            <span class="detail-value">₹0.48</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Total Budget</span>
+                            <span class="detail-value">₹72.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>CO₂ Target</span>
+                            <span class="detail-value">15 kg</span>
+                        </div>
+                    </div>
+                    <div class="listing-source">
+                        <span class="source-tag">🏢 Corporate Offset</span>
+                        <span class="verified-badge">✓ KYC Done</span>
+                    </div>
+                    <button class="btn-trade buy-btn" onclick="openTradeModal('buy', 150, 0.48, 'Arjun K.')">Sell To</button>
+                </div>
+
+                <div class="listing-card" data-type="sell">
+                    <div class="listing-header">
+                        <div class="seller-info">
+                            <div class="seller-avatar" style="background: linear-gradient(135deg,#9C27B0,#CE93D8)">S</div>
+                            <div>
+                                <div class="seller-name">Sneha T.</div>
+                                <div class="seller-location">Pune, MH</div>
+                            </div>
+                        </div>
+                        <span class="listing-type sell">Sell</span>
+                    </div>
+                    <div class="listing-amount">100 CARB</div>
+                    <div class="listing-details">
+                        <div class="detail-row">
+                            <span>Price per CARB</span>
+                            <span class="detail-value">₹0.50</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Total Value</span>
+                            <span class="detail-value">₹50.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>CO₂ Offset</span>
+                            <span class="detail-value">10 kg</span>
+                        </div>
+                    </div>
+                    <div class="listing-source">
+                        <span class="source-tag">🚌 Public Transport</span>
+                        <span class="verified-badge">✓ AI Verified</span>
+                    </div>
+                    <button class="btn-trade sell-btn" onclick="openTradeModal('sell', 100, 0.50, 'Sneha T.')">Buy Now</button>
+                </div>
+
+                <div class="listing-card" data-type="buy">
+                    <div class="listing-header">
+                        <div class="seller-info">
+                            <div class="seller-avatar" style="background: linear-gradient(135deg,#00BCD4,#4DD0E1)">V</div>
+                            <div>
+                                <div class="seller-name">Vikram N.</div>
+                                <div class="seller-location">Chennai, TN</div>
+                            </div>
+                        </div>
+                        <span class="listing-type buy">Buy</span>
+                    </div>
+                    <div class="listing-amount">800 CARB</div>
+                    <div class="listing-details">
+                        <div class="detail-row">
+                            <span>Offering per CARB</span>
+                            <span class="detail-value">₹0.51</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Total Budget</span>
+                            <span class="detail-value">₹408.00</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>CO₂ Target</span>
+                            <span class="detail-value">80 kg</span>
+                        </div>
+                    </div>
+                    <div class="listing-source">
+                        <span class="source-tag">🏭 Manufacturing</span>
+                        <span class="verified-badge">✓ KYC Done</span>
+                    </div>
+                    <button class="btn-trade buy-btn" onclick="openTradeModal('buy', 800, 0.51, 'Vikram N.')">Sell To</button>
+                </div>
+
+                <div class="listing-card" data-type="sell">
+                    <div class="listing-header">
+                        <div class="seller-info">
+                            <div class="seller-avatar" style="background: linear-gradient(135deg,#F44336,#EF9A9A)">M</div>
+                            <div>
+                                <div class="seller-name">Meera J.</div>
+                                <div class="seller-location">Hyderabad, TS</div>
+                            </div>
+                        </div>
+                        <span class="listing-type sell">Sell</span>
+                    </div>
+                    <div class="listing-amount">350 CARB</div>
+                    <div class="listing-details">
+                        <div class="detail-row">
+                            <span>Price per CARB</span>
+                            <span class="detail-value">₹0.53</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Total Value</span>
+                            <span class="detail-value">₹185.50</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>CO₂ Offset</span>
+                            <span class="detail-value">35 kg</span>
+                        </div>
+                    </div>
+                    <div class="listing-source">
+                        <span class="source-tag">🚛 Eco-Routes</span>
+                        <span class="verified-badge">✓ AI Verified</span>
+                    </div>
+                    <button class="btn-trade sell-btn" onclick="openTradeModal('sell', 350, 0.53, 'Meera J.')">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trade Modal -->
+    <div class="modal" id="tradeModal">
+        <div class="modal-overlay" onclick="closeTradeModal()"></div>
+        <div class="modal-content-v2">
+            <button class="modal-close" onclick="closeTradeModal()">
+                <svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            <div class="modal-header-v2">
+                <div class="modal-icon-v2" id="tradeModalIcon">💱</div>
+                <h2 id="tradeModalTitle">Confirm Trade</h2>
+                <p class="modal-subtitle" id="tradeModalSubtitle">Review your transaction details</p>
+            </div>
+            <div class="modal-body-v2">
+                <div class="trade-summary">
+                    <div class="trade-detail-row">
+                        <span>Counterparty</span>
+                        <strong id="tradeParty">-</strong>
+                    </div>
+                    <div class="trade-detail-row">
+                        <span>Amount</span>
+                        <strong id="tradeAmount">-</strong>
+                    </div>
+                    <div class="trade-detail-row">
+                        <span>Price per CARB</span>
+                        <strong id="tradePrice">-</strong>
+                    </div>
+                    <div class="trade-detail-row total">
+                        <span>Total</span>
+                        <strong id="tradeTotal">-</strong>
+                    </div>
+                </div>
+                <div class="trade-notice">
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                    </svg>
+                    Smart contract will escrow funds until delivery is confirmed.
+                </div>
+                <button class="btn-claim" id="tradeConfirmBtn" onclick="confirmTrade()">
+                    <span id="tradeConfirmText">Confirm Purchase</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio-section" id="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Your Portfolio</h2>
+                <p class="section-subtitle">Track your carbon credit holdings and impact</p>
+            </div>
+
+            <div class="portfolio-overview">
+                <div class="portfolio-stat-card">
+                    <div class="pstat-icon" style="background: linear-gradient(135deg,#4CAF50,#81C784)">
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="white">
+                            <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="pstat-info">
+                        <div class="pstat-label">Total Holdings</div>
+                        <div class="pstat-value" id="portfolioHoldings">142.5 CARB</div>
+                        <div class="pstat-change positive">+20 this week</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-stat-card">
+                    <div class="pstat-icon" style="background: linear-gradient(135deg,#1E3A8A,#3B82F6)">
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="white">
+                            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                        </svg>
+                    </div>
+                    <div class="pstat-info">
+                        <div class="pstat-label">Portfolio Value</div>
+                        <div class="pstat-value">₹71.25</div>
+                        <div class="pstat-change positive">+12.5% this month</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-stat-card">
+                    <div class="pstat-icon" style="background: linear-gradient(135deg,#FF9800,#FFB74D)">
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="white">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <div class="pstat-info">
+                        <div class="pstat-label">Total Earned</div>
+                        <div class="pstat-value">210 CARB</div>
+                        <div class="pstat-change positive">All time</div>
+                    </div>
+                </div>
+
+                <div class="portfolio-stat-card">
+                    <div class="pstat-icon" style="background: linear-gradient(135deg,#9C27B0,#CE93D8)">
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="white">
+                            <path d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 7l2.55 2.4A1 1 0 0116 11H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"/>
+                        </svg>
+                    </div>
+                    <div class="pstat-info">
+                        <div class="pstat-label">CO₂ Offset</div>
+                        <div class="pstat-value">21 kg</div>
+                        <div class="pstat-change positive">Your impact</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-holdings-card">
+                    <h3 class="portfolio-card-title">Holdings Breakdown</h3>
+                    <div class="holdings-list">
+                        <div class="holding-item">
+                            <div class="holding-source">
+                                <span class="holding-icon">🌳</span>
+                                <div>
+                                    <div class="holding-name">Tree Planting</div>
+                                    <div class="holding-date">Last earned: Apr 25</div>
+                                </div>
+                            </div>
+                            <div class="holding-amount">
+                                <div class="holding-carb">80 CARB</div>
+                                <div class="holding-value">₹40.00</div>
+                            </div>
+                        </div>
+                        <div class="holding-item">
+                            <div class="holding-source">
+                                <span class="holding-icon">☀️</span>
+                                <div>
+                                    <div class="holding-name">Solar Energy</div>
+                                    <div class="holding-date">Last earned: Apr 20</div>
+                                </div>
+                            </div>
+                            <div class="holding-amount">
+                                <div class="holding-carb">50 CARB</div>
+                                <div class="holding-value">₹25.00</div>
+                            </div>
+                        </div>
+                        <div class="holding-item">
+                            <div class="holding-source">
+                                <span class="holding-icon">🚌</span>
+                                <div>
+                                    <div class="holding-name">Public Transport</div>
+                                    <div class="holding-date">Last earned: Apr 28</div>
+                                </div>
+                            </div>
+                            <div class="holding-amount">
+                                <div class="holding-carb">12.5 CARB</div>
+                                <div class="holding-value">₹6.25</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-history-card">
+                    <h3 class="portfolio-card-title">Recent Transactions</h3>
+                    <div class="txn-list">
+                        <div class="txn-item">
+                            <div class="txn-icon earn">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="txn-info">
+                                <div class="txn-title">Earned - Tree Planting</div>
+                                <div class="txn-date">Apr 25, 2026</div>
+                            </div>
+                            <div class="txn-amount positive">+20 CARB</div>
+                        </div>
+                        <div class="txn-item">
+                            <div class="txn-icon earn">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="txn-info">
+                                <div class="txn-title">Earned - Solar Energy</div>
+                                <div class="txn-date">Apr 20, 2026</div>
+                            </div>
+                            <div class="txn-amount positive">+50 CARB</div>
+                        </div>
+                        <div class="txn-item">
+                            <div class="txn-icon trade">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="txn-info">
+                                <div class="txn-title">Sold to Arjun K.</div>
+                                <div class="txn-date">Apr 18, 2026</div>
+                            </div>
+                            <div class="txn-amount negative">-50 CARB</div>
+                        </div>
+                        <div class="txn-item">
+                            <div class="txn-icon earn">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="txn-info">
+                                <div class="txn-title">Earned - Public Transport</div>
+                                <div class="txn-date">Apr 28, 2026</div>
+                            </div>
+                            <div class="txn-amount positive">+2.5 CARB</div>
+                        </div>
+                        <div class="txn-item">
+                            <div class="txn-icon trade">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                            <div class="txn-info">
+                                <div class="txn-title">Bought from Priya S.</div>
+                                <div class="txn-date">Apr 15, 2026</div>
+                            </div>
+                            <div class="txn-amount positive">+20 CARB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Earn Modal -->
+    <div class="modal" id="earnModal">
+        <div class="modal-overlay" onclick="closeEarnModal()"></div>
+        <div class="modal-content-v2">
+            <button class="modal-close" onclick="closeEarnModal()">
+                <svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </button>
+            
+            <div class="modal-header-v2">
+                <div class="modal-icon-v2" id="modalIcon">🌳</div>
+                <h2 id="modalTitle">Upload Tree Planting Proof</h2>
+                <p class="modal-subtitle">AI will verify your action in 30 seconds</p>
+            </div>
+            
+            <div class="modal-body-v2">
+                <div class="upload-area-v2" id="uploadArea">
+                    <svg width="64" height="64" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                    </svg>
+                    <p class="upload-text">Drag & drop or click to upload</p>
+                    <p class="upload-hint">PNG, JPG up to 10MB</p>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileUpload(event)">
+                    <button class="btn-upload" onclick="document.getElementById('fileInput').click()">
+                        Choose File
+                    </button>
+                </div>
+                
+                <div id="verificationResult" class="verification-result-v2" style="display: none;">
+                    <div class="verification-animation">
+                        <svg class="checkmark" width="80" height="80" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <h3 class="verification-title">AI Verification Complete!</h3>
+                    <p id="verificationText" class="verification-text">Action verified: Planted 1 tree</p>
+                    
+                    <div class="verification-scores">
+                        <div class="score-item">
+                            <span class="score-label">Vertex AI</span>
+                            <span class="score-value">92%</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">Gemini</span>
+                            <span class="score-value">88%</span>
+                        </div>
+                        <div class="score-item final">
+                            <span class="score-label">Final Score</span>
+                            <span class="score-value">90%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="reward-display-v2">
+                        <span class="reward-label">You earned:</span>
+                        <span class="reward-amount" id="rewardAmount">+20 CARB</span>
+                        <span class="reward-fiat">≈ ₹10.00</span>
+                    </div>
+                    
+                    <button class="btn-claim" onclick="claimReward()">
+                        <span>Claim Tokens</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast" id="successToast">
+        <div class="toast-icon success">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            </svg>
+        </div>
+        <div class="toast-content">
+            <div class="toast-title">Success!</div>
+            <div class="toast-message" id="toastMessage">Tokens claimed successfully</div>
+        </div>
+    </div>
+
+    <script src="greenchain_improved.js"></script>
+</body>
+</html>
